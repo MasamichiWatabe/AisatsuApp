@@ -14,9 +14,6 @@ import android.widget.TimePicker;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int hourTime = 23;
-    int minuteTime = 59;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,22 +36,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 Log.d("UI-PARTS", String.valueOf(hourOfDay) + ":" + String.valueOf(minute));
+
+                TextView textView = (TextView) findViewById(R.id.textView);
+                if (hourOfDay >= 2 && hourOfDay < 10) {
+                    textView.setText("おはよう");
+                } else if (hourOfDay >= 10 && hourOfDay < 18) {
+                    textView.setText("こんにちは");
+                } else if ((hourOfDay >= 18 && hourOfDay < 24) || (hourOfDay >= 0 && hourOfDay < 2)) {
+                    textView.setText("こんばんは");
+                } else {
+                    textView.setText("時間が不明です");
+                }
             }
         },
-        hourTime,
-                minuteTime,
+        13,
+                0,
                 true);
+
         timePickerDialog.show();
 
-        TextView textView = (TextView) findViewById(R.id.textView);
-        if (hourTime >= 2 && hourTime < 10) {
-            textView.setText("おはよう");
-        } else if (hourTime >= 10 && hourTime < 18) {
-            textView.setText("こんにちは");
-        } else if ((hourTime >= 18 && hourTime < 24) || (hourTime >= 0 && hourTime < 2)) {
-            textView.setText("こんばんは");
-        } else {
-            textView.setText("時間が不明です");
-        }
     }
 }
